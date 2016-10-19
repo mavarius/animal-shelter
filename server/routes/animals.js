@@ -40,7 +40,7 @@ router.route('/:id')
   })
 
   .delete((req, res) => {
-    Animals.remove(req.params.id)
+    Animals.removeById(req.params.id)
       .then(Animals.findAll)
       .then(animals => {
         res.send(animals)

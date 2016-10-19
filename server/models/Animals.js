@@ -6,8 +6,6 @@ const squel = require('squel')
 const TABLE_NAME = 'Animals'
 
 // SCHEMA
-// arrivalDate
-// adoptionDate
 db.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
   id INT NOT NULL AUTO_INCREMENT,
   petName VARCHAR(100),
@@ -134,6 +132,14 @@ exports.update = (id, updateObj) => new Promise((resolve, reject) => {
 })
 
 // DELETE ENTRY
-// exports.remove = (id) => new Promise((resolve, reject) => {
-//   let sql = squel.delete()
-// })
+exports.removeById = (deleteId) => new Promise((resolve, reject) => {
+  let sql = squel.delete()
+                 .from(TABLE_NAME)
+                 .where(`Animals.id = ${deleteId}`)
+                 .toString()
+
+  db.query(sql, (err, result) => {
+    if (err) return reject(err)
+    resolve(result)
+  })
+})
