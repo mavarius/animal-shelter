@@ -27,5 +27,17 @@ router.route('/')
       })
   })
 
+router.route('/:id')
+  .put((req, res) => {
+    Animals.update(req.params.id, req.body)
+      .then(Animals.findAll)
+      .then(animals => {
+        res.send(animals)
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  })
+
 // EXPORT
 module.exports = router

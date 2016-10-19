@@ -40,3 +40,15 @@ exports.create = (client) => {
     })
   })
 }
+
+// UPDATE EXISTING ENTRY
+exports.update = (id, updateObj) => {
+  return new Promise((resolve, reject) => {
+    let sql = squel.update().table(TABLE_NAME).setFields(updateObj).where(`id = ${id}`).toString()
+
+    db.query(sql, (err, result) => {
+      if (err) return reject(err)
+      resolve(result)
+    })
+  })
+}

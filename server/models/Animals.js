@@ -13,7 +13,7 @@ db.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
   breed VARCHAR(60),
   sex VARCHAR(10),
   age_years INT,
-  owner INT,
+  ownerId INT,
   photo LONGTEXT,
   PRIMARY KEY (id)
 )`, err => {
@@ -32,6 +32,18 @@ exports.findAll = () => new Promise((resolve, reject) => {
 exports.create = (animal) => {
   return new Promise((resolve, reject) => {
     let sql = squel.insert().into(TABLE_NAME).setFields(animal).toString()
+
+    db.query(sql, (err, result) => {
+      if (err) return reject(err)
+      resolve(result)
+    })
+  })
+}
+
+// UPDATE EXISTING ENTRY
+exports.update = (id, updateObj) => {
+  return new Promise((resolve, reject) => {
+    let sql = squel.update().table(TABLE_NAME).setFields(updateObj).where(`id = ${id}`).toString()
 
     db.query(sql, (err, result) => {
       if (err) return reject(err)
