@@ -16,6 +16,18 @@ router.route('/owner/:id')
       })
   })
 
+// HOMELESS ROUTES
+router.route('/homeless')
+  .get((req, res) => {
+    Animals.findHomeless(req.params.id)
+      .then(animals => {
+        res.send(animals)
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  })
+
 // ID SPECIFIC ROUTES
 router.route('/:id')
   .get((req, res) => {

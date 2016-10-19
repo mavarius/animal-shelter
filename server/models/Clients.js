@@ -29,26 +29,49 @@ exports.findAll = () => new Promise((resolve, reject) => {
   })
 })
 
-// CREATE NEW ENTRY
-exports.create = (client) => {
-  return new Promise((resolve, reject) => {
-    let sql = squel.insert().into(TABLE_NAME).setFields(client).toString()
+// RETRIEVE ENTRY BY ID
+exports.findById = (searchId) => new Promise((resolve, reject) => {
+  let sql = squel.select()
+                 .from(TABLE_NAME)
+                 .field('Clients.*')
+                 .where(`Clients.id = ${searchId}`)
+                 .toString()
 
-    db.query(sql, (err, result) => {
-      if (err) return reject(err)
-      resolve(result)
-    })
+  db.query(sql, (err, clients) => {
+    if (err) return reject(err)
+    resolve(clients)
   })
-}
+})
+
+// CREATE NEW ENTRY
+exports.create = (client) => new Promise((resolve, reject) => {
+  let sql = squel.insert().into(TABLE_NAME).setFields(client).toString()
+
+  db.query(sql, (err, result) => {
+    if (err) return reject(err)
+    resolve(result)
+  })
+})
 
 // UPDATE EXISTING ENTRY
-exports.update = (id, updateObj) => {
-  return new Promise((resolve, reject) => {
-    let sql = squel.update().table(TABLE_NAME).setFields(updateObj).where(`id = ${id}`).toString()
+exports.update = (id, updateObj) => new Promise((resolve, reject) => {
+  let sql = squel.update().table(TABLE_NAME).setFields(updateObj).where(`id = ${id}`).toString()
 
-    db.query(sql, (err, result) => {
-      if (err) return reject(err)
-      resolve(result)
-    })
+  db.query(sql, (err, result) => {
+    if (err) return reject(err)
+    resolve(result)
   })
-}
+})
+
+// DELETE ENTRY
+exports.removeById = (deleteId) => new Promise((resolve, reject) => {
+  let sql = squel.delete()
+                 .from(TABLE_NAME)
+                 .where(`Clients.id = ${deleteId}`)
+                 .toString()
+
+  db.query(sql, (err, result) => {
+    if (err) return reject(err)
+    resolve(result)
+  })
+})

@@ -16,7 +16,7 @@ db.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
   age_months INT,
   temperment VARCHAR(100),
   description VARCHAR(300),
-  ownerId INT,
+  ownerId INT DEFAULT '0',
   arrivalDate DATE,
   adoptionDate DATE,
   photo LONGTEXT,
@@ -29,22 +29,10 @@ db.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
 exports.findAll = () => new Promise((resolve, reject) => {
   let sql = squel.select()
                  .from(TABLE_NAME)
-                 .field('Animals.id')
-                 .field('Animals.petName')
-                 .field('Animals.commonName')
-                 .field('Animals.breed')
-                 .field('Animals.sex')
-                 .field('Animals.age_years')
-                 .field('Animals.age_months')
-                 .field('Animals.temperment')
-                 .field('Animals.description')
-                 .field('Animals.arrivalDate')
-                 .field('Animals.adoptionDate')
-                 .field('Animals.photo')
-                 .field('ownerId')
+                 .field('Animals.*')
                  .field('Clients.firstName', 'ownerFirstName')
                  .field('Clients.lastName', 'ownerLastName')
-                 .join('Clients', null, 'Animals.ownerId = Clients.id')
+                 .left_join('Clients', null, 'Animals.ownerId = Clients.id')
                  .toString()
 
   db.query(sql, (err, animals) => {
@@ -57,22 +45,10 @@ exports.findAll = () => new Promise((resolve, reject) => {
 exports.findById = (searchId) => new Promise((resolve, reject) => {
   let sql = squel.select()
                  .from(TABLE_NAME)
-                 .field('Animals.id')
-                 .field('Animals.petName')
-                 .field('Animals.commonName')
-                 .field('Animals.breed')
-                 .field('Animals.sex')
-                 .field('Animals.age_years')
-                 .field('Animals.age_months')
-                 .field('Animals.temperment')
-                 .field('Animals.description')
-                 .field('Animals.arrivalDate')
-                 .field('Animals.adoptionDate')
-                 .field('Animals.photo')
-                 .field('ownerId')
+                 .field('Animals.*')
                  .field('Clients.firstName', 'ownerFirstName')
                  .field('Clients.lastName', 'ownerLastName')
-                 .join('Clients', null, 'Animals.ownerId = Clients.id')
+                 .left_join('Clients', null, 'Animals.ownerId = Clients.id')
                  .where(`Animals.id = ${searchId}`)
                  .toString()
 
@@ -86,23 +62,25 @@ exports.findById = (searchId) => new Promise((resolve, reject) => {
 exports.findByOwner = (searchId) => new Promise((resolve, reject) => {
   let sql = squel.select()
                  .from(TABLE_NAME)
-                 .field('Animals.id')
-                 .field('Animals.petName')
-                 .field('Animals.commonName')
-                 .field('Animals.breed')
-                 .field('Animals.sex')
-                 .field('Animals.age_years')
-                 .field('Animals.age_months')
-                 .field('Animals.temperment')
-                 .field('Animals.description')
-                 .field('Animals.arrivalDate')
-                 .field('Animals.adoptionDate')
-                 .field('Animals.photo')
-                 .field('ownerId')
+                 .field('Animals.*')
                  .field('Clients.firstName', 'ownerFirstName')
                  .field('Clients.lastName', 'ownerLastName')
                  .join('Clients', null, 'Animals.ownerId = Clients.id')
                  .where(`Animals.ownerId = ${searchId}`)
+                 .toString()
+
+  db.query(sql, (err, animals) => {
+    if (err) return reject(err)
+    resolve(animals)
+  })
+})
+
+// RETRIEVE HOMELESS ENTRIES
+exports.findHomeless = (searchId) => new Promise((resolve, reject) => {
+  let sql = squel.select()
+                 .from(TABLE_NAME)
+                 .field('Animals.*')
+                 .where(`Animals.ownerId = ${false}`)
                  .toString()
 
   db.query(sql, (err, animals) => {
