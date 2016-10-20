@@ -12,6 +12,10 @@ const AnimalsActions = {
 
   getAnimalById (id) {
     API.getAnimalById(id)
+  },
+
+  updateAnimal (id, updateData) {
+    API.updateAnimal(id, updateData)
   }
 }
 

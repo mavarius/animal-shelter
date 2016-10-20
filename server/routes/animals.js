@@ -42,7 +42,7 @@ router.route('/:id')
 
   .put((req, res) => {
     Animals.update(req.params.id, req.body)
-      .then(Animals.findAll)
+      .then(Animals.findById(req.params.id))
       .then(animals => {
         res.send(animals)
       })
