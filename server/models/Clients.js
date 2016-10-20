@@ -8,14 +8,16 @@ const TABLE_NAME = 'Clients'
 // SCHEMA
 db.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
   id INT NOT NULL AUTO_INCREMENT,
-  firstName VARCHAR(100),
-  lastName VARCHAR(100),
-  phone VARCHAR(10),
-  address VARCHAR(60),
-  city VARCHAR(60),
-  state VARCHAR(2),
-  zip INT,
-  photo LONGTEXT,
+  firstName VARCHAR(100) DEFAULT 'NA',
+  lastName VARCHAR(100) DEFAULT 'NA',
+  email VARCHAR(50) DEFAULT 'NA',
+  phone VARCHAR(10) DEFAULT 'NA',
+  address VARCHAR(60) DEFAULT 'NA',
+  city VARCHAR(60) DEFAULT 'NA',
+  state VARCHAR(2) DEFAULT '--',
+  zip INT DEFAULT '00000',
+  photo VARCHAR(500) DEFAULT 'NA',
+  note VARCHAR(500) DEFAULT 'NA',
   PRIMARY KEY (id)
 )`, err => {
   if (err) throw err

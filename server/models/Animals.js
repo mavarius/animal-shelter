@@ -8,18 +8,20 @@ const TABLE_NAME = 'Animals'
 // SCHEMA
 db.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
   id INT NOT NULL AUTO_INCREMENT,
-  petName VARCHAR(100),
-  commonName VARCHAR(60),
-  breed VARCHAR(60),
-  sex VARCHAR(10),
-  age_years INT,
-  age_months INT,
-  temperment VARCHAR(100),
-  description VARCHAR(300),
+  petName VARCHAR(100) DEFAULT 'NA',
+  commonName VARCHAR(60) DEFAULT 'NA',
+  breed VARCHAR(60) DEFAULT 'NA',
+  sex VARCHAR(10) DEFAULT 'NA',
+  age_years INT DEFAULT '0',
+  age_months INT DEFAULT '0',
+  temperment VARCHAR(100) DEFAULT 'NA',
+  description VARCHAR(500) DEFAULT 'NA',
+  vaccinationDate DATE DEFAULT '9999-12-31',
   ownerId INT DEFAULT '0',
-  arrivalDate DATE,
-  adoptionDate DATE,
-  photo LONGTEXT,
+  arrivalDate DATE DEFAULT '9999-12-31',
+  adoptionDate DATE DEFAULT '9999-12-31',
+  photo VARCHAR(500) DEFAULT 'NA',
+  note VARCHAR(500) DEFAULT 'NA',
   PRIMARY KEY (id)
 )`, err => {
   if (err) throw err
@@ -92,7 +94,7 @@ exports.findHomeless = (searchId) => new Promise((resolve, reject) => {
 // CREATE NEW ENTRY
 exports.create = (animal) => new Promise((resolve, reject) => {
   let sql = squel.insert().into(TABLE_NAME).setFields(animal).toString()
-
+  console.log('sql: ', sql)
   db.query(sql, (err, result) => {
     if (err) return reject(err)
     resolve(result)

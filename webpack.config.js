@@ -9,6 +9,7 @@ module.exports = {
     './src/css/style.css',
     './src/index.js'
   ],
+  target: 'web',
   output: {
     path: path.resolve('build'),
     publicPath: '/',
@@ -28,7 +29,8 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
-      }
+      },
+      { test: /(\.css)$/, loaders: ['style', 'css'] }
     ]
   }
 }
