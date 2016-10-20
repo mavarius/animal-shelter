@@ -12,12 +12,12 @@ export default class SearchAdd extends Component {
   render () {
     const { section } = this.props
     return (
-      <div className="searchAdd">
-        <h5>{section.toUpperCase()}</h5>
-        <input type="text" />
-        <Link to={`search/${section}`}><button>search</button></Link>
-        <button onClick={() => this._openModal()}>add new</button>
-        <Link to={`search/${section}`}><button>show all</button></Link>
+      <div className="searchAdd col-xs-12 col-sm-6">
+        <h3>{section.toUpperCase()}</h3>
+        {/* <input type="text" /> */}
+        {/* <Link to={`search/${section}`}><button>search</button></Link> */}
+        <button className="btn pBtn col-xs-5" onClick={() => this._openModal()}>add new</button>
+        <Link to={`search/${section}`}><button className="btn pBtn col-xs-5 col-xs-offset-2">show all</button></Link>
       </div>
     )
   }

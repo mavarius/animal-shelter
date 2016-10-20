@@ -90,9 +90,9 @@ export default class AddNewClient extends Component {
             </div>
           </div>
 
-          <button className="btn btn-success">save</button>
+          <button className="btn pBtn col-xs-6 col-md-2">save</button>
         </form>
-        <button className="btn btn-default" onClick={() => this.cancelForm()}>cancel</button>
+        <button className="btn col-xs-6 col-md-2" onClick={() => this.cancelForm()}>cancel</button>
       </div>
     )
   }

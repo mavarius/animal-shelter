@@ -69,36 +69,39 @@ export default class AnimalDetails extends Component {
       const { petName, commonName, breed, sex, age_years, age_months, temperment, description, vaccinationDate, arrivalDate, adoptionDate, ownerId, ownerFirstName, ownerLastName, photo, note } = this.state.animal
 
       return (
-        <div className="animalDetails">
-          <span className="photo"><img src={photo || '../images/placeholder.png'} /></span>
-          <h3>{petName}</h3>
-          <h5>{commonName}</h5>
-          <h6>{breed}</h6>
-          <p>{sex}</p>
-          <h6>Age: {age_years} years {age_months} months</h6>
-          <p className="arrivalDate">Arrival Date: {arrivalDate}</p>
-          <p className="temperment">Temperment: {temperment}</p>
-          <p className="description">Description: {description}</p>
-          <p className="vaccinationDate">Vaccination Date: {vaccinationDate}</p>
-          <p className="note">Note: {note}</p>
+        <div className="row">
+          <div className="animalDetails col-xs-12">
+              <div className="photo col-xs-12 col-md-4"><img src={photo || '../images/placeholder.png'} /></div>
+              <div className="col-xs-12 col-md-8">
+                <h1>{petName}</h1>
+                <h3>{commonName} | {breed}</h3>
+                <p>{sex}</p>
+                <h6>Age: {age_years} years {age_months} months</h6>
+                <p className="arrivalDate">Arrival Date: {arrivalDate}</p>
+                <p className="temperment">Temperment: {temperment}</p>
+                <p className="description">Description: {description}</p>
+                <p className="vaccinationDate">Vaccination Date: {vaccinationDate}</p>
+                <p className="note">Note: {note}</p>
 
-          {!ownerId ?
-            <form onSubmit={(e) => this._adopt(e)}>
-              <h5>Available for Adoption</h5>
-              <select className="btn  dropdown-toggle" ref="ownerId">
-                <option value={null}>Select Client</option>
-                {this.state.clients.map(client => {
-                  const { id, firstName, lastName } = client
-                  return <option key={id} value={id}>{firstName} {lastName}</option>
-                })}
-              </select>
-              <button>adopt</button>
-            </form>
-          : <span>
-            <p className="adoptionDate">Adoption Date: {adoptionDate || 'available for adoption'}</p>
-            <p className="ownerName">Current Owner: {`${ownerFirstName} ${ownerLastName}` || ''}</p>
-          </span>
-          }
+                {!ownerId ?
+                  <form onSubmit={(e) => this._adopt(e)}>
+                    <h5>Available for Adoption</h5>
+                    <select className="btn  dropdown-toggle" ref="ownerId">
+                      <option value={null}>Select Client</option>
+                      {this.state.clients.map(client => {
+                        const { id, firstName, lastName } = client
+                        return <option key={id} value={id}>{firstName} {lastName}</option>
+                      })}
+                    </select>
+                    <button>adopt</button>
+                  </form>
+                : <span>
+                  <p className="adoptionDate">Adoption Date: {adoptionDate || 'available for adoption'}</p>
+                  <p className="ownerName">Current Owner: {`${ownerFirstName} ${ownerLastName}` || ''}</p>
+                </span>
+                }
+              </div>
+          </div>
         </div>
       )
     } else {

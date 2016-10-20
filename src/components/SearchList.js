@@ -17,7 +17,7 @@ export default class SearchList extends Component {
     }
 
     return (
-      <div>
+      <div className="row">
         {cards}
       </div>
     )

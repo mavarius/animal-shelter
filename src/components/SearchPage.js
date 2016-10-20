@@ -50,7 +50,7 @@ export default class SearchPage extends Component {
   render () {
     return (
       <div>
-        <SearchBar />
+        {/* <SearchBar /> */}
         <SearchList section={this.props.params.section} {...this.state} />
       </div>
     )
